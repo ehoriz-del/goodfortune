@@ -4,252 +4,1925 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Good Fortune</title>
+<title>Good Fortune — Lucky Number Generator</title>
+<meta name="description" content="Generate lucky numbers for popular lotteries around the world.">
 
 <style>
+/* =========================================================
+   GOOD FORTUNE
+   Modern one-page lottery number generator
+   ========================================================= */
+
+:root{
+    --bg:#f3f0e8;
+    --paper:#faf8f2;
+    --ink:#10141a;
+    --muted:#74756f;
+    --line:rgba(16,20,26,.14);
+    --gold:#a88945;
+    --gold-light:#d7c18b;
+    --special:#b4934d;
+    --white:#ffffff;
+
+    --max-width:1280px;
+}
+
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:linear-gradient(135deg,#0f172a,#1e3a8a);
-    color:white;
-    text-align:center;
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    background:var(--bg);
+    color:var(--ink);
     min-height:100vh;
-}
-
-.container{
-    width:90%;
-    max-width:900px;
-    margin:auto;
-    padding:40px 20px;
-}
-
-h1{
-    font-size:3rem;
-    margin-bottom:10px;
-}
-
-.subtitle{
-    color:#dbeafe;
-    font-size:1.2rem;
-    margin-bottom:40px;
-}
-
-.card{
-    background:white;
-    color:#222;
-    border-radius:16px;
-    padding:25px;
-    margin-bottom:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.25);
-}
-
-.card h2{
-    margin-bottom:20px;
+    -webkit-font-smoothing:antialiased;
 }
 
 button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:8px;
-    padding:14px 28px;
-    font-size:16px;
-    cursor:pointer;
-    transition:.3s;
+    font:inherit;
 }
 
-button:hover{
-    background:#1d4ed8;
-    transform:translateY(-2px);
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+::selection{
+    background:var(--ink);
+    color:var(--bg);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header{
+    width:100%;
+    padding:28px 42px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--line);
+}
+
+.logo{
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:.22em;
+}
+
+.logo-dot{
+    color:var(--gold);
+}
+
+.header-note{
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main{
+    width:min(calc(100% - 80px), var(--max-width));
+    margin:0 auto;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero{
+    min-height:480px;
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+    align-items:end;
+    padding:90px 0 72px;
+    border-bottom:1px solid var(--line);
+}
+
+.hero-title{
+    font-size:clamp(72px,10vw,150px);
+    font-weight:700;
+    line-height:.78;
+    letter-spacing:-.075em;
+    max-width:900px;
+}
+
+.hero-title span{
+    display:block;
+}
+
+.hero-title .fortune{
+    color:var(--gold);
+}
+
+.hero-right{
+    padding-left:50px;
+    padding-bottom:8px;
+}
+
+.hero-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    margin-bottom:24px;
+}
+
+.hero-tag::before{
+    content:"";
+    display:block;
+    width:35px;
+    height:1px;
+    background:var(--gold);
+}
+
+.hero-text{
+    max-width:340px;
+    font-size:20px;
+    line-height:1.45;
+    letter-spacing:-.02em;
+}
+
+
+/* =========================================================
+   COUNTRY SECTION
+   ========================================================= */
+
+.selector-section{
+    padding:74px 0 85px;
+    border-bottom:1px solid var(--line);
+}
+
+.section-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:35px;
+}
+
+.eyebrow{
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.2em;
+    color:var(--gold);
+}
+
+.section-number{
+    font-size:12px;
+    color:var(--muted);
+}
+
+.country-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+}
+
+.country{
+    background:transparent;
+    border:none;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    min-height:120px;
+    padding:22px;
+    text-align:left;
+    cursor:pointer;
+    transition:
+        background .25s ease,
+        color .25s ease;
+    position:relative;
+}
+
+.country:hover{
+    background:rgba(255,255,255,.35);
+}
+
+.country.active{
+    background:var(--ink);
+    color:var(--paper);
+}
+
+.country-number{
+    display:block;
+    font-size:10px;
+    letter-spacing:.12em;
+    opacity:.45;
+    margin-bottom:32px;
+}
+
+.country-name{
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:-.025em;
+}
+
+.country-code{
+    font-size:10px;
+    margin-top:4px;
+    opacity:.55;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+}
+
+
+/* =========================================================
+   LOTTERY PANEL
+   ========================================================= */
+
+.generator-section{
+    padding:85px 0 100px;
+}
+
+.generator-layout{
+    display:grid;
+    grid-template-columns:.7fr 1.3fr;
+    gap:80px;
+}
+
+
+/* LEFT SIDE */
+
+.lottery-meta{
+    max-width:360px;
+}
+
+.selected-country{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:22px;
+}
+
+.lottery-name{
+    font-size:clamp(38px,5vw,68px);
+    line-height:.96;
+    letter-spacing:-.055em;
+    margin-bottom:22px;
+}
+
+.local-name{
+    font-size:15px;
+    color:var(--muted);
+    margin-bottom:35px;
+}
+
+.rule{
+    border-top:1px solid var(--line);
+    padding:16px 0;
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+    font-size:12px;
+}
+
+.rule-label{
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.1em;
+}
+
+.rule-value{
+    font-weight:700;
+    text-align:right;
+}
+
+.game-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:28px;
+}
+
+.game-tab{
+    appearance:none;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink);
+    padding:10px 14px;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.game-tab:hover{
+    border-color:var(--ink);
+}
+
+.game-tab.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+}
+
+
+/* RIGHT SIDE */
+
+.number-area{
+    min-width:0;
+}
+
+.number-label{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:18px;
 }
 
 .numbers{
-    min-height:70px;
-    margin-bottom:20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:18px;
 }
 
 .ball{
-    display:inline-flex;
-    justify-content:center;
-    align-items:center;
-    width:50px;
-    height:50px;
-    margin:5px;
+    width:clamp(72px,7vw,94px);
+    aspect-ratio:1;
     border-radius:50%;
+    border:1px solid var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:clamp(23px,2.5vw,34px);
+    font-weight:600;
+    letter-spacing:-.04em;
+    background:transparent;
+    position:relative;
+    overflow:hidden;
+}
+
+.ball.special{
+    background:var(--gold);
+    border-color:var(--gold);
     color:white;
-    font-weight:bold;
-    font-size:18px;
 }
 
-.white{
-    background:#64748b;
+.ball.special::after{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:50%;
 }
 
-.red{
-    background:#dc2626;
+.ball-value{
+    position:relative;
+    z-index:2;
 }
 
-.gold{
-    background:#f59e0b;
+
+/* divider between normal and special */
+
+.ball-divider{
+    width:1px;
+    height:72px;
+    background:var(--line);
+    align-self:center;
+    margin:0 4px;
 }
 
-.blue{
-    background:#2563eb;
+
+/* GENERATE BUTTON */
+
+.generate-wrap{
+    margin-top:50px;
 }
+
+.generate{
+    width:100%;
+    border:none;
+    background:var(--ink);
+    color:var(--paper);
+    min-height:78px;
+    padding:0 30px;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:
+        background .25s ease,
+        transform .15s ease;
+}
+
+.generate:hover{
+    background:#242a32;
+}
+
+.generate:active{
+    transform:scale(.995);
+}
+
+.generate:disabled{
+    cursor:default;
+    opacity:.8;
+}
+
+.generate-text{
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+}
+
+.generate-icon{
+    width:38px;
+    height:38px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+}
+
+.helper{
+    margin-top:16px;
+    font-size:11px;
+    line-height:1.6;
+    color:var(--muted);
+}
+
+
+/* =========================================================
+   QUOTE / BRAND STATEMENT
+   ========================================================= */
+
+.statement{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:115px 0;
+    text-align:center;
+}
+
+.statement-small{
+    font-size:10px;
+    font-weight:700;
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:.22em;
+    margin-bottom:24px;
+}
+
+.statement h2{
+    font-size:clamp(45px,7vw,94px);
+    line-height:.95;
+    letter-spacing:-.06em;
+    font-weight:600;
+}
+
+
+/* =========================================================
+   INFO
+   ========================================================= */
+
+.info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    padding:85px 0;
+}
+
+.info-title{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+}
+
+.info-text{
+    max-width:590px;
+    font-size:15px;
+    line-height:1.8;
+    color:#555851;
+}
+
+.info-text p + p{
+    margin-top:16px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 footer{
-    margin-top:20px;
-    color:#cbd5e1;
-    font-size:14px;
+    border-top:1px solid var(--line);
+    width:min(calc(100% - 80px), var(--max-width));
+    margin:0 auto;
+    padding:30px 0 40px;
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+    font-size:10px;
+    color:var(--muted);
+    letter-spacing:.08em;
+    text-transform:uppercase;
 }
-</style>
 
+.footer-right{
+    text-align:right;
+}
+
+
+/* =========================================================
+   SLOT ANIMATION
+   ========================================================= */
+
+.ball.spinning .ball-value{
+    animation:numberPulse .11s linear infinite;
+}
+
+@keyframes numberPulse{
+    0%{
+        opacity:.35;
+        transform:translateY(-7px);
+    }
+
+    50%{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    100%{
+        opacity:.35;
+        transform:translateY(7px);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:950px){
+
+    main,
+    footer{
+        width:min(calc(100% - 44px), var(--max-width));
+    }
+
+    header{
+        padding:22px;
+    }
+
+    .header-note{
+        display:none;
+    }
+
+    .hero{
+        min-height:auto;
+        grid-template-columns:1fr;
+        padding:70px 0 55px;
+    }
+
+    .hero-title{
+        font-size:clamp(65px,17vw,115px);
+    }
+
+    .hero-right{
+        padding:50px 0 0;
+    }
+
+    .country-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .country{
+        min-height:105px;
+    }
+
+    .generator-layout{
+        grid-template-columns:1fr;
+        gap:60px;
+    }
+
+    .lottery-meta{
+        max-width:none;
+    }
+
+    .info{
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    main,
+    footer{
+        width:calc(100% - 30px);
+    }
+
+    .hero{
+        padding-top:56px;
+    }
+
+    .hero-title{
+        font-size:18vw;
+    }
+
+    .country{
+        padding:17px;
+    }
+
+    .country-name{
+        font-size:14px;
+    }
+
+    .selector-section{
+        padding:58px 0 68px;
+    }
+
+    .generator-section{
+        padding:65px 0 75px;
+    }
+
+    .numbers{
+        gap:8px;
+    }
+
+    .ball{
+        width:61px;
+        font-size:22px;
+    }
+
+    .ball-divider{
+        height:50px;
+    }
+
+    .statement{
+        padding:80px 0;
+    }
+
+    footer{
+        flex-direction:column;
+    }
+
+    .footer-right{
+        text-align:left;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="container">
 
-<h1>🍀 Good Fortune</h1>
+<!-- =======================================================
+     HEADER
+     ======================================================= -->
 
-<p class="subtitle">
-Generate Lucky Numbers for Powerball, Mega Millions & Chinese Lotto
-</p>
+<header>
 
-<div class="card">
+    <a href="#" class="logo">
+        GOOD FORTUNE<span class="logo-dot">.</span>
+    </a>
 
-<h2>🇺🇸 Powerball</h2>
+    <div class="header-note">
+        Lucky numbers from around the world
+    </div>
 
-<div id="powerball" class="numbers"></div>
-
-<button onclick="generatePowerball()">
-🍀 Try Your Luck
-</button>
-
-</div>
+</header>
 
 
-<div class="card">
 
-<h2>🇺🇸 Mega Millions</h2>
-
-<div id="mega" class="numbers"></div>
-
-<button onclick="generateMega()">
-🍀 Try Your Luck
-</button>
-
-</div>
+<main>
 
 
-<div class="card">
+<!-- =======================================================
+     HERO
+     ======================================================= -->
 
-<h2>🇨🇳 Chinese Double Color Ball (双色球)</h2>
+<section class="hero">
 
-<div id="china" class="numbers"></div>
+    <div>
+        <h1 class="hero-title">
+            <span>GOOD</span>
+            <span class="fortune">FORTUNE</span>
+        </h1>
+    </div>
 
-<button onclick="generateChina()">
-🍀 Try Your Luck
-</button>
+    <div class="hero-right">
 
-</div>
+        <div class="hero-tag">
+            Global Number Generator
+        </div>
+
+        <p class="hero-text">
+            A little luck has no borders.
+            Pick a lottery. We'll pick the numbers.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     COUNTRY SELECTOR
+     ======================================================= -->
+
+<section class="selector-section">
+
+    <div class="section-top">
+
+        <div class="eyebrow">
+            Choose your lottery
+        </div>
+
+        <div class="section-number">
+            01 / SELECT
+        </div>
+
+    </div>
+
+
+    <div class="country-grid" id="countryGrid">
+
+        <button class="country active" data-country="usa">
+            <span class="country-number">01</span>
+            <div class="country-name">United States</div>
+            <div class="country-code">USA</div>
+        </button>
+
+        <button class="country" data-country="korea">
+            <span class="country-number">02</span>
+            <div class="country-name">Korea</div>
+            <div class="country-code">대한민국</div>
+        </button>
+
+        <button class="country" data-country="china">
+            <span class="country-number">03</span>
+            <div class="country-name">China</div>
+            <div class="country-code">中国</div>
+        </button>
+
+        <button class="country" data-country="europe">
+            <span class="country-number">04</span>
+            <div class="country-name">Europe</div>
+            <div class="country-code">EuroMillions</div>
+        </button>
+
+        <button class="country" data-country="japan">
+            <span class="country-number">05</span>
+            <div class="country-name">Japan</div>
+            <div class="country-code">日本</div>
+        </button>
+
+        <button class="country" data-country="canada">
+            <span class="country-number">06</span>
+            <div class="country-name">Canada</div>
+            <div class="country-code">CAN</div>
+        </button>
+
+        <button class="country" data-country="uk">
+            <span class="country-number">07</span>
+            <div class="country-name">United Kingdom</div>
+            <div class="country-code">UK</div>
+        </button>
+
+        <button class="country" data-country="australia">
+            <span class="country-number">08</span>
+            <div class="country-name">Australia</div>
+            <div class="country-code">AUS</div>
+        </button>
+
+        <button class="country" data-country="italy">
+            <span class="country-number">09</span>
+            <div class="country-name">Italy</div>
+            <div class="country-code">Italia</div>
+        </button>
+
+        <button class="country" data-country="spain">
+            <span class="country-number">10</span>
+            <div class="country-name">Spain</div>
+            <div class="country-code">España</div>
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     NUMBER GENERATOR
+     ======================================================= -->
+
+<section class="generator-section">
+
+    <div class="generator-layout">
+
+
+        <!-- LEFT -->
+
+        <div class="lottery-meta">
+
+            <div class="selected-country" id="selectedCountry">
+                United States
+            </div>
+
+            <h2 class="lottery-name" id="lotteryName">
+                Powerball
+            </h2>
+
+            <div class="local-name" id="localName">
+                America's jackpot game
+            </div>
+
+
+            <div class="rule">
+
+                <div class="rule-label">
+                    Main numbers
+                </div>
+
+                <div class="rule-value" id="mainRule">
+                    5 from 1–69
+                </div>
+
+            </div>
+
+
+            <div class="rule" id="specialRuleRow">
+
+                <div class="rule-label" id="specialRuleLabel">
+                    Powerball
+                </div>
+
+                <div class="rule-value" id="specialRule">
+                    1 from 1–26
+                </div>
+
+            </div>
+
+
+            <div class="game-tabs" id="gameTabs"></div>
+
+        </div>
+
+
+
+        <!-- RIGHT -->
+
+        <div class="number-area">
+
+            <div class="number-label">
+
+                <span>Your numbers</span>
+
+                <span id="numberType">
+                    Main + Powerball
+                </span>
+
+            </div>
+
+
+            <div class="numbers" id="numbers"></div>
+
+
+            <div class="generate-wrap">
+
+                <button class="generate" id="generateButton">
+
+                    <span class="generate-text">
+                        Generate My Numbers
+                    </span>
+
+                    <span class="generate-icon">
+                        ↻
+                    </span>
+
+                </button>
+
+                <div class="helper">
+                    Numbers are generated randomly for entertainment purposes.
+                    This website is not affiliated with or endorsed by any lottery operator.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     STATEMENT
+     ======================================================= -->
+
+<section class="statement">
+
+    <div class="statement-small">
+        Good Fortune
+    </div>
+
+    <h2>
+        LUCK HAS<br>
+        NO BORDERS.
+    </h2>
+
+</section>
+
+
+
+<!-- =======================================================
+     ABOUT
+     ======================================================= -->
+
+<section class="info">
+
+    <div class="info-title">
+        About Good Fortune
+    </div>
+
+    <div class="info-text">
+
+        <p>
+            Good Fortune is a simple global lucky-number generator
+            inspired by some of the world's best-known lottery games.
+        </p>
+
+        <p>
+            Choose a country, select a game, and generate a fresh set
+            of random numbers based on that lottery's number format.
+        </p>
+
+        <p>
+            Good Fortune does not sell lottery tickets and does not
+            provide winning-number predictions. Every combination has
+            the same chance of being drawn.
+        </p>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =======================================================
+     FOOTER
+     ======================================================= -->
 
 <footer>
 
-Good Fortune wishes you the best of luck! 🍀
+    <div>
+        © 2026 Good Fortune
+    </div>
+
+    <div class="footer-right">
+        contact@goodfortune.com
+    </div>
 
 </footer>
 
-</div>
 
 
 <script>
 
-function randomUnique(count,min,max){
+/* =========================================================
+   LOTTERY DATABASE
 
-    let numbers=[];
+   Keeping all lottery formats here makes future changes easy.
+   If a lottery changes its rules, only edit this section.
+   ========================================================= */
 
-    while(numbers.length<count){
+const lotteryData = {
 
-        let n=Math.floor(Math.random()*(max-min+1))+min;
 
-        if(!numbers.includes(n)){
-            numbers.push(n);
+    /* =========================
+       UNITED STATES
+       ========================= */
+
+    usa: {
+
+        country: "United States",
+
+        games: [
+
+            {
+                name: "Powerball",
+                local: "America's jackpot game",
+
+                mainCount: 5,
+                mainMax: 69,
+
+                specialCount: 1,
+                specialMax: 26,
+
+                specialName: "Powerball"
+            },
+
+            {
+                name: "Mega Millions",
+                local: "Mega Millions",
+
+                mainCount: 5,
+                mainMax: 70,
+
+                specialCount: 1,
+                specialMax: 24,
+
+                specialName: "Mega Ball"
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       SOUTH KOREA
+       ========================= */
+
+    korea: {
+
+        country: "Korea",
+
+        games: [
+
+            {
+                name: "Lotto 6/45",
+                local: "로또 6/45",
+
+                mainCount: 6,
+                mainMax: 45,
+
+                specialCount: 0
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       CHINA
+       ========================= */
+
+    china: {
+
+        country: "China",
+
+        games: [
+
+            {
+                name: "Super Lotto",
+                local: "超级大乐透 · Dà Lè Tòu",
+
+                mainCount: 5,
+                mainMax: 35,
+
+                specialCount: 2,
+                specialMax: 12,
+
+                specialName: "Back Area"
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       EUROPE
+       ========================= */
+
+    europe: {
+
+        country: "Europe",
+
+        games: [
+
+            {
+                name: "EuroMillions",
+                local: "Played across participating European countries",
+
+                mainCount: 5,
+                mainMax: 50,
+
+                specialCount: 2,
+                specialMax: 12,
+
+                specialName: "Lucky Stars"
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       JAPAN
+       ========================= */
+
+    japan: {
+
+        country: "Japan",
+
+        games: [
+
+            {
+                name: "Loto 6",
+                local: "ロト6",
+
+                mainCount: 6,
+                mainMax: 43,
+
+                specialCount: 0
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       CANADA
+       ========================= */
+
+    canada: {
+
+        country: "Canada",
+
+        games: [
+
+            {
+                name: "Lotto Max",
+                local: "Canada's national jackpot lottery",
+
+                mainCount: 7,
+                mainMax: 52,
+
+                specialCount: 0
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       UNITED KINGDOM
+       ========================= */
+
+    uk: {
+
+        country: "United Kingdom",
+
+        games: [
+
+            {
+                name: "Lotto",
+                local: "The National Lottery",
+
+                mainCount: 6,
+                mainMax: 59,
+
+                specialCount: 0
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       AUSTRALIA
+       ========================= */
+
+    australia: {
+
+        country: "Australia",
+
+        games: [
+
+            {
+                name: "Oz Lotto",
+                local: "Australia",
+
+                mainCount: 7,
+                mainMax: 47,
+
+                specialCount: 0
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       ITALY
+       ========================= */
+
+    italy: {
+
+        country: "Italy",
+
+        games: [
+
+            {
+                name: "SuperEnalotto",
+                local: "SuperEnalotto · Italia",
+
+                mainCount: 6,
+                mainMax: 90,
+
+                specialCount: 0
+            }
+
+        ]
+
+    },
+
+
+    /* =========================
+       SPAIN
+       ========================= */
+
+    spain: {
+
+        country: "Spain",
+
+        games: [
+
+            {
+                name: "La Primitiva",
+                local: "La Primitiva · España",
+
+                mainCount: 6,
+                mainMax: 49,
+
+                specialCount: 1,
+                specialMin: 0,
+                specialMax: 9,
+
+                specialName: "Reintegro"
+            }
+
+        ]
+
+    }
+
+};
+
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let currentCountry = "usa";
+let currentGameIndex = 0;
+let generating = false;
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const selectedCountry = document.getElementById("selectedCountry");
+const lotteryName = document.getElementById("lotteryName");
+const localName = document.getElementById("localName");
+
+const mainRule = document.getElementById("mainRule");
+
+const specialRuleRow =
+    document.getElementById("specialRuleRow");
+
+const specialRuleLabel =
+    document.getElementById("specialRuleLabel");
+
+const specialRule =
+    document.getElementById("specialRule");
+
+const numberType =
+    document.getElementById("numberType");
+
+const numbersContainer =
+    document.getElementById("numbers");
+
+const generateButton =
+    document.getElementById("generateButton");
+
+const gameTabs =
+    document.getElementById("gameTabs");
+
+
+
+/* =========================================================
+   RANDOM NUMBER FUNCTIONS
+   ========================================================= */
+
+function randomInteger(min,max){
+
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
+
+}
+
+
+function uniqueNumbers(count,min,max){
+
+    const numbers = new Set();
+
+    while(numbers.size < count){
+
+        numbers.add(
+            randomInteger(min,max)
+        );
+
+    }
+
+    return [...numbers].sort(
+        (a,b) => a-b
+    );
+
+}
+
+
+
+/* =========================================================
+   FORMAT NUMBER
+   ========================================================= */
+
+function formatNumber(number){
+
+    return String(number).padStart(2,"0");
+
+}
+
+
+
+/* =========================================================
+   CURRENT GAME
+   ========================================================= */
+
+function getCurrentGame(){
+
+    return lotteryData[currentCountry]
+        .games[currentGameIndex];
+
+}
+
+
+
+/* =========================================================
+   BUILD GAME TABS
+   ========================================================= */
+
+function buildGameTabs(){
+
+    const games =
+        lotteryData[currentCountry].games;
+
+    gameTabs.innerHTML = "";
+
+
+    /*
+       Only display tabs if the country
+       has more than one lottery.
+    */
+
+    if(games.length <= 1){
+        return;
+    }
+
+
+    games.forEach((game,index)=>{
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "game-tab" +
+            (index === currentGameIndex
+                ? " active"
+                : "");
+
+        button.textContent = game.name;
+
+
+        button.addEventListener(
+            "click",
+            ()=>{
+
+                if(generating) return;
+
+                currentGameIndex = index;
+
+                updateLottery();
+
+            }
+        );
+
+
+        gameTabs.appendChild(button);
+
+    });
+
+}
+
+
+
+/* =========================================================
+   UPDATE LOTTERY
+   ========================================================= */
+
+function updateLottery(){
+
+    const data =
+        lotteryData[currentCountry];
+
+    const game =
+        getCurrentGame();
+
+
+    selectedCountry.textContent =
+        data.country;
+
+    lotteryName.textContent =
+        game.name;
+
+    localName.textContent =
+        game.local;
+
+
+    mainRule.textContent =
+        `${game.mainCount} from 1–${game.mainMax}`;
+
+
+    /*
+       Special numbers
+    */
+
+    if(game.specialCount){
+
+        specialRuleRow.style.display =
+            "flex";
+
+
+        specialRuleLabel.textContent =
+            game.specialName;
+
+
+        const min =
+            game.specialMin ?? 1;
+
+
+        specialRule.textContent =
+            `${game.specialCount} from ${min}–${game.specialMax}`;
+
+
+        numberType.textContent =
+            `Main + ${game.specialName}`;
+
+    }
+    else{
+
+        specialRuleRow.style.display =
+            "none";
+
+        numberType.textContent =
+            "Main numbers";
+
+    }
+
+
+    buildGameTabs();
+
+    renderPlaceholder();
+
+}
+
+
+
+/* =========================================================
+   PLACEHOLDER NUMBERS
+   ========================================================= */
+
+function renderPlaceholder(){
+
+    const game =
+        getCurrentGame();
+
+    numbersContainer.innerHTML = "";
+
+
+    for(
+        let i=0;
+        i<game.mainCount;
+        i++
+    ){
+
+        createBall("--",false);
+
+    }
+
+
+    if(game.specialCount){
+
+        const divider =
+            document.createElement("div");
+
+        divider.className =
+            "ball-divider";
+
+        numbersContainer.appendChild(
+            divider
+        );
+
+
+        for(
+            let i=0;
+            i<game.specialCount;
+            i++
+        ){
+
+            createBall("--",true);
+
         }
 
     }
 
-    numbers.sort((a,b)=>a-b);
-
-    return numbers;
-}
-
-function createBalls(numbers,color){
-
-    return numbers.map(num =>
-        `<span class="ball ${color}">${num}</span>`
-    ).join("");
-
-}
-
-
-function generatePowerball(){
-
-    let white=randomUnique(5,1,69);
-
-    let power=Math.floor(Math.random()*26)+1;
-
-    document.getElementById("powerball").innerHTML=
-
-        createBalls(white,"white")+
-
-        `<span class="ball red">${power}</span>`;
-
 }
 
 
 
-function generateMega(){
+/* =========================================================
+   CREATE BALL
+   ========================================================= */
 
-    let white=randomUnique(5,1,70);
+function createBall(value,special){
 
-    let mega=Math.floor(Math.random()*25)+1;
+    const ball =
+        document.createElement("div");
 
-    document.getElementById("mega").innerHTML=
+    ball.className =
+        "ball" +
+        (special ? " special" : "");
 
-        createBalls(white,"white")+
 
-        `<span class="ball gold">${mega}</span>`;
+    const span =
+        document.createElement("span");
+
+    span.className =
+        "ball-value";
+
+    span.textContent =
+        typeof value === "number"
+        ? formatNumber(value)
+        : value;
+
+
+    ball.appendChild(span);
+
+    numbersContainer.appendChild(ball);
+
+    return ball;
 
 }
 
 
 
-function generateChina(){
+/* =========================================================
+   COUNTRY BUTTONS
+   ========================================================= */
 
-    let red=randomUnique(6,1,33);
+document.querySelectorAll(".country")
+.forEach(button=>{
 
-    let blue=Math.floor(Math.random()*16)+1;
+    button.addEventListener(
+        "click",
+        ()=>{
 
-    document.getElementById("china").innerHTML=
+            if(generating) return;
 
-        createBalls(red,"red")+
 
-        `<span class="ball blue">${blue}</span>`;
+            document
+            .querySelectorAll(".country")
+            .forEach(item=>
+                item.classList.remove("active")
+            );
+
+
+            button.classList.add("active");
+
+
+            currentCountry =
+                button.dataset.country;
+
+            currentGameIndex = 0;
+
+
+            updateLottery();
+
+
+            /*
+               On smaller screens,
+               gently move to generator.
+            */
+
+            if(window.innerWidth < 800){
+
+                setTimeout(()=>{
+
+                    document
+                    .querySelector(
+                        ".generator-section"
+                    )
+                    .scrollIntoView({
+                        behavior:"smooth",
+                        block:"start"
+                    });
+
+                },100);
+
+            }
+
+        }
+    );
+
+});
+
+
+
+/* =========================================================
+   SLOT MACHINE ANIMATION
+   ========================================================= */
+
+async function generateNumbers(){
+
+    if(generating) return;
+
+
+    generating = true;
+
+    generateButton.disabled = true;
+
+
+    const game =
+        getCurrentGame();
+
+
+    /*
+       Final main numbers
+    */
+
+    const finalMain =
+        uniqueNumbers(
+            game.mainCount,
+            1,
+            game.mainMax
+        );
+
+
+    /*
+       Final special numbers
+    */
+
+    let finalSpecial = [];
+
+
+    if(game.specialCount){
+
+        const min =
+            game.specialMin ?? 1;
+
+
+        finalSpecial =
+            uniqueNumbers(
+                game.specialCount,
+                min,
+                game.specialMax
+            );
+
+    }
+
+
+    /*
+       Get visual balls
+    */
+
+    const balls =
+        [...numbersContainer
+            .querySelectorAll(".ball")];
+
+
+    /*
+       Start every ball spinning.
+    */
+
+    balls.forEach(ball=>
+        ball.classList.add("spinning")
+    );
+
+
+    /*
+       Rapidly change displayed numbers.
+    */
+
+    const interval =
+        setInterval(()=>{
+
+
+            balls.forEach(
+                (ball,index)=>{
+
+
+                    const value =
+                        ball.querySelector(
+                            ".ball-value"
+                        );
+
+
+                    if(
+                        index <
+                        game.mainCount
+                    ){
+
+                        value.textContent =
+                            formatNumber(
+                                randomInteger(
+                                    1,
+                                    game.mainMax
+                                )
+                            );
+
+                    }
+                    else{
+
+                        const min =
+                            game.specialMin ?? 1;
+
+
+                        value.textContent =
+                            formatNumber(
+                                randomInteger(
+                                    min,
+                                    game.specialMax
+                                )
+                            );
+
+                    }
+
+                }
+            );
+
+
+        },60);
+
+
+
+    /*
+       Balls stop one by one.
+    */
+
+    for(
+        let index=0;
+        index<balls.length;
+        index++
+    ){
+
+        await wait(
+            260 +
+            index * 70
+        );
+
+
+        const ball =
+            balls[index];
+
+        const value =
+            ball.querySelector(
+                ".ball-value"
+            );
+
+
+        ball.classList.remove(
+            "spinning"
+        );
+
+
+        if(index < game.mainCount){
+
+            value.textContent =
+                formatNumber(
+                    finalMain[index]
+                );
+
+        }
+        else{
+
+            value.textContent =
+                formatNumber(
+                    finalSpecial[
+                        index -
+                        game.mainCount
+                    ]
+                );
+
+        }
+
+    }
+
+
+    clearInterval(interval);
+
+
+    generateButton.disabled = false;
+
+    generating = false;
 
 }
 
 
-generatePowerball();
 
-generateMega();
+/* =========================================================
+   WAIT
+   ========================================================= */
 
-generateChina();
+function wait(milliseconds){
+
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                milliseconds
+            )
+    );
+
+}
+
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+generateButton.addEventListener(
+    "click",
+    generateNumbers
+);
+
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+updateLottery();
 
 </script>
 

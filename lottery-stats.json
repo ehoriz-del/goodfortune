@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-22T16:00:00-04:00",
+  "games": {
+    "usa:Powerball": {
+      "status": "ok", "updated": "August 19, 2026", "period": "Current 5/69 + 1/26 format: Oct. 7, 2015–Aug. 19, 2026",
+      "main": [21, 27, 28, 61, 64], "special": [4],
+      "mainCounts": {"21":124,"27":118,"28":119,"61":125,"64":123}, "specialCounts": {"4":66},
+      "sources": [{"label":"Texas Lottery frequency chart","url":"https://www.texaslottery.com/export/sites/lottery/Games/Powerball/Number_Frequency.html"}]
+    },
+    "usa:Mega Millions": {
+      "status": "ok", "updated": "August 21, 2026", "period": "Current 5/70 + 1/24 format: Apr. 8, 2025–Aug. 21, 2026",
+      "main": [18, 40, 42, 49, 56], "special": [12],
+      "mainCounts": {"18":17,"40":17,"42":16,"49":17,"56":15}, "specialCounts": {"12":13},
+      "sources": [{"label":"Texas Lottery frequency chart","url":"https://www.texaslottery.com/export/sites/lottery/Games/Mega_Millions/Number_Frequency.html"}]
+    },
+    "korea:Lotto 6/45": {
+      "status": "ok",
+      "updated": "2026년 8월 22일",
+      "period": "Official cumulative statistics: draws 1–1,238; bonus numbers excluded",
+      "localizedPeriod": {
+        "ko": "동행복권 공식 누적 통계 · 제1회–제1,238회 · 보너스 번호 제외"
+      },
+      "main": [12, 13, 18, 27, 34, 45],
+      "mainCounts": {"12":180,"13":180,"18":178,"27":181,"34":186,"45":175},
+      "sources": [{"label":"동행복권 공식 통계","url":"https://www.dhlottery.co.kr/lt645/stats"}]
+    },
+    "china:Super Lotto": {"status":"unavailable"},
+    "europe:EuroMillions": {
+      "status":"ok", "updated":"August 22, 2026", "period":"Current 5/50 + 2/12 format; current-format frequency table",
+      "main":[17,23,29,42,44], "special":[2,3],
+      "mainCounts":{"17":120,"23":117,"29":119,"42":123,"44":116}, "specialCounts":{"2":202,"3":194},
+      "sources":[{"label":"EuroMillions statistics","url":"https://www.euro-millions.com/statistics"}]
+    },
+    "japan:Loto 6": {
+      "status":"ok", "updated":"August 20, 2026", "period":"Most recent 100 recorded draws",
+      "main":[6,8,18,35,37,42],
+      "sources":[{"label":"Stats247 draw archive","url":"https://stats247.com/lotto/japan-takarakuji-6"}]
+    },
+    "canada:Lotto Max": {"status":"unavailable"},
+    "uk:Lotto": {
+      "status":"ok", "updated":"August 22, 2026", "period":"Past 12 months under the current 6/59 format",
+      "main":[9,22,32,40,54,59],
+      "mainCounts":{"9":17,"22":22,"32":16,"40":19,"54":20,"59":19},
+      "sources":[{"label":"UK Lotto statistics","url":"https://www.beatlottery.co.uk/lotto/statistics"}]
+    },
+    "australia:Oz Lotto": {
+      "status":"ok", "updated":"August 18, 2026", "period":"Current 7/47 format frequency table",
+      "main":[17,21,28,30,33,39,47],
+      "sources":[{"label":"Oz Lotto statistics","url":"https://www.ozlotteries.com/oz-lotto/statistics"}]
+    },
+    "italy:SuperEnalotto": {
+      "status":"ok", "updated":"August 21, 2026", "period":"Jan. 3, 1998–Aug. 21, 2026",
+      "main":[6,49,55,79,83,85],
+      "mainCounts":{"6":319,"49":313,"55":312,"79":314,"83":312,"85":326},
+      "sources":[{"label":"SuperEnalotto statistics","url":"https://www.superenalotto.net/en/statistics"}]
+    },
+    "spain:La Primitiva": {
+      "status":"ok", "updated":"August 20, 2026", "period":"Historical total of 4,178 draws; Reintegro frequency not included",
+      "main":[1,3,38,39,40,45],
+      "mainCounts":{"1":541,"3":534,"38":547,"39":545,"40":534,"45":538},
+      "sources":[{"label":"Official SELAE statistics","url":"https://www.loteriasyapuestas.es/en/la-primitiva/estadisticas"}]
+    }
+  }
+}

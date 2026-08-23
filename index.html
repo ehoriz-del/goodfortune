@@ -492,6 +492,72 @@ main{
     color:var(--muted);
 }
 
+/* HISTORICAL FREQUENCY */
+.frequency-panel{
+    margin-top:32px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+}
+.frequency-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:18px;
+}
+.frequency-title{
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+}
+.frequency-date{
+    font-size:10px;
+    color:var(--muted);
+    text-align:right;
+}
+.frequency-balls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-bottom:14px;
+}
+.frequency-ball{
+    width:46px;
+    height:46px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    font-weight:750;
+    background:rgba(168,137,69,.07);
+}
+.frequency-ball.special{
+    color:#fff;
+    background:var(--gold);
+}
+.frequency-divider{
+    width:1px;
+    height:36px;
+    margin:5px 3px;
+    background:var(--line);
+}
+.frequency-meta,
+.frequency-disclaimer{
+    font-size:10px;
+    line-height:1.65;
+    color:var(--muted);
+}
+.frequency-source{
+    text-decoration:underline;
+    text-underline-offset:3px;
+}
+.frequency-disclaimer{
+    margin-top:10px;
+}
+
 
 /* =========================================================
    QUOTE / BRAND STATEMENT
@@ -888,7 +954,7 @@ footer{
 
             <div class="rule">
 
-                <div class="rule-label">
+                <div class="rule-label" id="mainRuleLabel">
                     Main numbers
                 </div>
 
@@ -924,7 +990,7 @@ footer{
 
             <div class="number-label">
 
-                <span>Your numbers</span>
+                <span id="yourNumbersLabel">Your numbers</span>
 
                 <span id="numberType">
                     Main + Powerball
@@ -940,7 +1006,7 @@ footer{
 
                 <button class="generate" id="generateButton">
 
-                    <span class="generate-text">
+                    <span class="generate-text" id="generateText">
                         Generate My Numbers
                     </span>
 
@@ -950,10 +1016,24 @@ footer{
 
                 </button>
 
-                <div class="helper">
+                <div class="helper" id="generatorHelper">
                     Numbers are generated randomly for entertainment purposes.
                     This website is not affiliated with or endorsed by any lottery operator.
                 </div>
+
+                <aside class="frequency-panel" id="frequencyPanel" aria-live="polite" hidden>
+                    <div class="frequency-head">
+                        <div class="frequency-title" id="frequencyTitle">Historically Most Frequent</div>
+                        <div class="frequency-date" id="frequencyDate">Loading statistics…</div>
+                    </div>
+                    <div class="frequency-balls" id="frequencyBalls"></div>
+                    <div class="frequency-meta" id="frequencyMeta"></div>
+                    <div class="frequency-disclaimer" id="frequencyDisclaimer">
+                        Historical frequency is descriptive only. Past drawings do not predict future results,
+                        improve the odds of winning, or make any combination more likely. Verify all results
+                        with the relevant official lottery operator.
+                    </div>
+                </aside>
 
             </div>
 
@@ -1010,6 +1090,14 @@ footer{
             Good Fortune does not sell lottery tickets and does not
             provide winning-number predictions. Every combination has
             the same chance of being drawn.
+        </p>
+
+        <p>
+            Historical statistics are compiled from official public records where available and
+            reputable third-party archives where necessary. Sources may correct, delay, restrict,
+            or revise their data. Statistics are provided for general information and entertainment
+            only and should not be treated as betting, financial, or predictive advice. Always confirm
+            winning numbers, game rules, eligibility, deadlines, and prizes with the official operator.
         </p>
 
     </div>
@@ -1137,7 +1225,7 @@ const lotteryData = {
                 specialCount: 2,
                 specialMax: 12,
 
-                specialName: "Back Area"
+                specialName: "后区号码"
             }
 
         ]
@@ -1328,6 +1416,86 @@ const lotteryData = {
 
 };
 
+/* =========================================================
+   LOCALIZED GENERATOR COPY
+   The site identity stays in English; the selected lottery
+   panel changes to the language most closely associated with
+   that market. Canada and EuroMillions remain in English.
+   ========================================================= */
+
+const translations = {
+    usa: {
+        lang:"en", mainNumbers:"Main numbers", yourNumbers:"Your numbers",
+        generate:"Generate My Numbers", frequency:"Historically Most Frequent",
+        updated:"Updated", sources:"Sources", ranking:"Ranked by recorded appearances; displayed numerically.",
+        helper:"Numbers are generated randomly for entertainment purposes. This website is not affiliated with or endorsed by any lottery operator.",
+        disclaimer:"Historical frequency is descriptive only. Past drawings do not predict future results, improve the odds of winning, or make any combination more likely. Verify all results with the relevant official lottery operator."
+    },
+    korea: {
+        lang:"ko", mainNumbers:"일반 번호", yourNumbers:"내 번호",
+        generate:"번호 생성하기", frequency:"역대 최다 출현 번호",
+        updated:"업데이트", sources:"출처", ranking:"공식 출현 횟수 순위 기준 · 번호는 오름차순 표시",
+        helper:"번호는 오락 목적으로 무작위 생성됩니다. 본 웹사이트는 동행복권 또는 기타 복권 운영기관과 제휴하거나 공식 승인을 받은 사이트가 아닙니다.",
+        disclaimer:"과거 출현 빈도는 통계적 참고자료일 뿐이며 미래의 추첨 결과를 예측하거나 당첨 확률을 높이지 않습니다. 당첨번호와 게임 정보는 반드시 동행복권 공식 사이트에서 확인하세요."
+    },
+    china: {
+        lang:"zh-CN", mainNumbers:"前区号码", yourNumbers:"您的号码",
+        generate:"生成号码", frequency:"历史高频号码",
+        updated:"更新", sources:"资料来源", ranking:"按历史出现次数排名，并按数字顺序显示。",
+        helper:"号码为娱乐用途随机生成。本网站与任何彩票发行或运营机构均无隶属、合作或认可关系。",
+        disclaimer:"历史出现频率仅供参考，不能预测未来开奖结果，也不会提高中奖概率。请以官方彩票机构公布的信息为准。"
+    },
+    europe: {
+        lang:"en", mainNumbers:"Main numbers", yourNumbers:"Your numbers",
+        generate:"Generate My Numbers", frequency:"Historically Most Frequent",
+        updated:"Updated", sources:"Sources", ranking:"Ranked by recorded appearances; displayed numerically.",
+        helper:"Numbers are generated randomly for entertainment purposes. This website is not affiliated with or endorsed by any EuroMillions operator.",
+        disclaimer:"Historical frequency is descriptive only. Past drawings do not predict future results or improve the odds of winning. Verify results with an official EuroMillions operator."
+    },
+    japan: {
+        lang:"ja", mainNumbers:"本数字", yourNumbers:"あなたの番号",
+        generate:"番号を生成", frequency:"過去の高頻度番号",
+        updated:"更新", sources:"出典", ranking:"過去の出現回数順に選び、数字順に表示しています。",
+        helper:"番号は娯楽目的で無作為に生成されます。本サイトは宝くじ運営機関と提携または承認されたものではありません。",
+        disclaimer:"過去の出現頻度は参考情報であり、将来の抽せん結果を予測したり、当せん確率を高めたりするものではありません。公式情報をご確認ください。"
+    },
+    canada: {
+        lang:"en-CA", mainNumbers:"Main numbers", yourNumbers:"Your numbers",
+        generate:"Generate My Numbers", frequency:"Historically Most Frequent",
+        updated:"Updated", sources:"Sources", ranking:"Ranked by recorded appearances; displayed numerically.",
+        helper:"Numbers are generated randomly for entertainment purposes. This website is not affiliated with or endorsed by any Canadian lottery operator.",
+        disclaimer:"Historical frequency is descriptive only. Past drawings do not predict future results or improve the odds of winning. Verify all information with an official Canadian lottery operator."
+    },
+    uk: {
+        lang:"en-GB", mainNumbers:"Main numbers", yourNumbers:"Your numbers",
+        generate:"Generate My Numbers", frequency:"Historically Most Frequent",
+        updated:"Updated", sources:"Sources", ranking:"Ranked by recorded appearances; displayed numerically.",
+        helper:"Numbers are generated randomly for entertainment purposes. This website is not affiliated with or endorsed by The National Lottery.",
+        disclaimer:"Historical frequency is descriptive only. Past drawings do not predict future results or improve the odds of winning. Verify all information with the official operator."
+    },
+    australia: {
+        lang:"en-AU", mainNumbers:"Main numbers", yourNumbers:"Your numbers",
+        generate:"Generate My Numbers", frequency:"Historically Most Frequent",
+        updated:"Updated", sources:"Sources", ranking:"Ranked by recorded appearances; displayed numerically.",
+        helper:"Numbers are generated randomly for entertainment purposes. This website is not affiliated with or endorsed by any Australian lottery operator.",
+        disclaimer:"Historical frequency is descriptive only. Past drawings do not predict future results or improve the odds of winning. Verify all information with an official Australian lottery operator."
+    },
+    italy: {
+        lang:"it", mainNumbers:"Numeri principali", yourNumbers:"I tuoi numeri",
+        generate:"Genera i miei numeri", frequency:"Numeri più frequenti nella storia",
+        updated:"Aggiornato", sources:"Fonti", ranking:"Classificati per frequenza storica e mostrati in ordine numerico.",
+        helper:"I numeri sono generati casualmente a scopo di intrattenimento. Questo sito non è affiliato né approvato da alcun operatore di lotteria.",
+        disclaimer:"Le frequenze storiche hanno solo valore informativo. Non prevedono le estrazioni future e non aumentano le probabilità di vincita. Verifica sempre i dati presso l’operatore ufficiale."
+    },
+    spain: {
+        lang:"es", mainNumbers:"Números principales", yourNumbers:"Tus números",
+        generate:"Generar mis números", frequency:"Números históricamente más frecuentes",
+        updated:"Actualizado", sources:"Fuentes", ranking:"Clasificados por frecuencia histórica y mostrados en orden numérico.",
+        helper:"Los números se generan al azar con fines de entretenimiento. Este sitio no está afiliado ni respaldado por ningún operador de lotería.",
+        disclaimer:"La frecuencia histórica es únicamente informativa. No predice futuros sorteos ni aumenta las probabilidades de ganar. Verifica siempre los resultados con el operador oficial."
+    }
+};
+
 
 
 /* =========================================================
@@ -1337,6 +1505,7 @@ const lotteryData = {
 let currentCountry = "usa";
 let currentGameIndex = 0;
 let generating = false;
+let lotteryStats = {};
 
 
 /* =========================================================
@@ -1348,6 +1517,7 @@ const lotteryName = document.getElementById("lotteryName");
 const localName = document.getElementById("localName");
 
 const mainRule = document.getElementById("mainRule");
+const mainRuleLabel = document.getElementById("mainRuleLabel");
 
 const specialRuleRow =
     document.getElementById("specialRuleRow");
@@ -1369,6 +1539,90 @@ const generateButton =
 
 const gameTabs =
     document.getElementById("gameTabs");
+
+const frequencyDate = document.getElementById("frequencyDate");
+const frequencyBalls = document.getElementById("frequencyBalls");
+const frequencyMeta = document.getElementById("frequencyMeta");
+const frequencyPanel = document.getElementById("frequencyPanel");
+const frequencyTitle = document.getElementById("frequencyTitle");
+const frequencyDisclaimer = document.getElementById("frequencyDisclaimer");
+const yourNumbersLabel = document.getElementById("yourNumbersLabel");
+const generateText = document.getElementById("generateText");
+const generatorHelper = document.getElementById("generatorHelper");
+
+function currentTranslation(){
+    return translations[currentCountry] || translations.usa;
+}
+
+function applyLanguage(){
+    const copy = currentTranslation();
+    document.documentElement.lang = copy.lang;
+    mainRuleLabel.textContent = copy.mainNumbers;
+    yourNumbersLabel.textContent = copy.yourNumbers;
+    generateText.textContent = copy.generate;
+    generatorHelper.textContent = copy.helper;
+    frequencyTitle.textContent = copy.frequency;
+    frequencyDisclaimer.textContent = copy.disclaimer;
+}
+
+function gameKey(){
+    const game = getCurrentGame();
+    return `${currentCountry}:${game.name}`;
+}
+
+function renderFrequency(){
+    const stat = lotteryStats[gameKey()];
+    frequencyBalls.innerHTML = "";
+
+    if(!stat || stat.status !== "ok"){
+        frequencyPanel.hidden = true;
+        return;
+    }
+
+    frequencyPanel.hidden = false;
+    const copy = currentTranslation();
+
+    frequencyDate.textContent = `${copy.updated} ${stat.updated}`;
+    (stat.main || []).forEach(number => {
+        const ball = document.createElement("span");
+        ball.className = "frequency-ball";
+        ball.textContent = formatNumber(number);
+        ball.title = `${number} — ${stat.mainCounts?.[String(number)] ?? "frequency recorded"}`;
+        frequencyBalls.appendChild(ball);
+    });
+
+    if(stat.special?.length){
+        const divider = document.createElement("span");
+        divider.className = "frequency-divider";
+        frequencyBalls.appendChild(divider);
+        stat.special.forEach(number => {
+            const ball = document.createElement("span");
+            ball.className = "frequency-ball special";
+            ball.textContent = formatNumber(number);
+            ball.title = `${number} — ${stat.specialCounts?.[String(number)] ?? "frequency recorded"}`;
+            frequencyBalls.appendChild(ball);
+        });
+    }
+
+    const sourceLinks = (stat.sources || []).map(source =>
+        `<a class="frequency-source" href="${source.url}" target="_blank" rel="noopener noreferrer nofollow">${source.label}</a>`
+    ).join(" · ");
+    const period = stat.localizedPeriod?.[copy.lang] || stat.period;
+    frequencyMeta.innerHTML = `${period}. ${copy.ranking} ${sourceLinks ? `${copy.sources}: ${sourceLinks}` : ""}`;
+}
+
+async function loadStatistics(){
+    try{
+        const response = await fetch(`lottery-stats.json?v=${Date.now()}`, {cache:"no-store"});
+        if(!response.ok) throw new Error("Statistics file unavailable");
+        const payload = await response.json();
+        lotteryStats = payload.games || {};
+    }
+    catch(error){
+        lotteryStats = {};
+    }
+    renderFrequency();
+}
 
 
 
@@ -1500,6 +1754,8 @@ function updateLottery(){
     const game =
         getCurrentGame();
 
+    applyLanguage();
+
 
     selectedCountry.textContent =
         data.country;
@@ -1538,7 +1794,7 @@ function updateLottery(){
 
 
         numberType.textContent =
-            `Main + ${game.specialName}`;
+            `${currentTranslation().mainNumbers} + ${game.specialName}`;
 
     }
     else{
@@ -1547,7 +1803,7 @@ function updateLottery(){
             "none";
 
         numberType.textContent =
-            "Main numbers";
+            currentTranslation().mainNumbers;
 
     }
 
@@ -1555,6 +1811,8 @@ function updateLottery(){
     buildGameTabs();
 
     renderPlaceholder();
+
+    renderFrequency();
 
 }
 
@@ -1935,6 +2193,7 @@ generateButton.addEventListener(
    ========================================================= */
 
 updateLottery();
+loadStatistics();
 
 </script>
 

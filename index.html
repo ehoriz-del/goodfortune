@@ -2051,6 +2051,19 @@ async function generateNumbers(){
                 (ball,index)=>{
 
 
+                    /*
+                       A ball that has already stopped contains
+                       its final number. Do not let the animation
+                       interval overwrite that number again.
+                    */
+
+                    if(
+                        !ball.classList.contains(
+                            "spinning"
+                        )
+                    ) return;
+
+
                     const value =
                         ball.querySelector(
                             ".ball-value"

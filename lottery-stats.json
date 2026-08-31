@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-24T10:55:30.001921+00:00",
+  "generatedAt": "2026-08-31T17:37:55.576461+00:00",
   "games": {
     "usa:Powerball": {
       "status": "ok",
-      "updated": "August 24, 2026",
+      "updated": "August 31, 2026",
       "period": "Current 5/69 + 1/26 format: Oct. 7, 2015–Aug. 19, 2026",
       "main": [
         21,
@@ -35,7 +35,7 @@
     },
     "usa:Mega Millions": {
       "status": "ok",
-      "updated": "August 24, 2026",
+      "updated": "August 31, 2026",
       "period": "Current 5/70 + 1/24 format: Apr. 8, 2025–Aug. 21, 2026",
       "main": [
         17,
@@ -50,9 +50,9 @@
       "mainCounts": {
         "18": 17,
         "40": 17,
+        "42": 17,
         "49": 17,
-        "42": 16,
-        "17": 15
+        "17": 16
       },
       "specialCounts": {
         "18": 17
@@ -66,7 +66,7 @@
     },
     "korea:Lotto 6/45": {
       "status": "ok",
-      "updated": "2026년 8월 24일",
+      "updated": "2026년 8월 31일",
       "period": "Official cumulative statistics: draws 1–1,238; bonus numbers excluded",
       "localizedPeriod": {
         "ko": "동행복권 공식 누적 통계 · 제1회–제1,238회 · 보너스 번호 제외"
@@ -76,16 +76,16 @@
         13,
         18,
         27,
-        34,
-        45
+        33,
+        34
       ],
       "mainCounts": {
         "34": 186,
+        "13": 181,
         "27": 181,
         "12": 180,
-        "13": 180,
         "18": 178,
-        "45": 175
+        "33": 175
       },
       "sources": [
         {

@@ -1571,8 +1571,23 @@ function gameKey(){
 }
 
 function renderFrequency(){
-    const stat = lotteryStats[gameKey()];
+    /*
+       Historical frequency statistics are intentionally shown
+       only for the United States and Korea.
+       All other countries keep the number generator only.
+    */
+    const frequencyEnabledCountries = new Set(["usa", "korea"]);
+
     frequencyBalls.innerHTML = "";
+    frequencyMeta.innerHTML = "";
+    frequencyDate.textContent = "";
+
+    if(!frequencyEnabledCountries.has(currentCountry)){
+        frequencyPanel.hidden = true;
+        return;
+    }
+
+    const stat = lotteryStats[gameKey()];
 
     if(!stat || stat.status !== "ok"){
         frequencyPanel.hidden = true;
@@ -1616,7 +1631,18 @@ async function loadStatistics(){
         const response = await fetch(`lottery-stats.json?v=${Date.now()}`, {cache:"no-store"});
         if(!response.ok) throw new Error("Statistics file unavailable");
         const payload = await response.json();
-        lotteryStats = payload.games || {};
+        const allStats = payload.games || {};
+
+        /*
+           Keep only U.S. and Korea historical-frequency data in memory.
+           This prevents statistics for other countries from being used
+           even if lottery-stats.json contains them.
+        */
+        lotteryStats = Object.fromEntries(
+            Object.entries(allStats).filter(([key]) =>
+                key.startsWith("usa:") || key.startsWith("korea:")
+            )
+        );
     }
     catch(error){
         lotteryStats = {};
@@ -2010,13 +2036,31 @@ async function generateNumbers(){
         const min =
             game.specialMin ?? 1;
 
+        /*
+           Generate special numbers without duplicating
+           any already-selected main number.
+        */
+        const usedNumbers = new Set(finalMain);
+        finalSpecial = [];
 
-        finalSpecial =
-            uniqueNumbers(
-                game.specialCount,
-                min,
-                game.specialMax
-            );
+        while(finalSpecial.length < game.specialCount){
+
+            const candidate =
+                randomInteger(
+                    min,
+                    game.specialMax
+                );
+
+            if(!usedNumbers.has(candidate)){
+
+                usedNumbers.add(candidate);
+                finalSpecial.push(candidate);
+
+            }
+
+        }
+
+        finalSpecial.sort((a,b) => a-b);
 
     }
 
@@ -2050,19 +2094,14 @@ async function generateNumbers(){
             balls.forEach(
                 (ball,index)=>{
 
-
                     /*
-                       A ball that has already stopped contains
-                       its final number. Do not let the animation
-                       interval overwrite that number again.
+                       Once a ball has stopped spinning, its final
+                       number must never be overwritten by the
+                       animation timer.
                     */
-
-                    if(
-                        !ball.classList.contains(
-                            "spinning"
-                        )
-                    ) return;
-
+                    if(!ball.classList.contains("spinning")){
+                        return;
+                    }
 
                     const value =
                         ball.querySelector(

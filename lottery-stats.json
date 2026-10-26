@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T16:59:17.462961+00:00",
+  "generatedAt": "2026-10-26T16:47:53.543519+00:00",
   "games": {
     "usa:Powerball": {
       "status": "ok",
-      "updated": "October 19, 2026",
+      "updated": "October 26, 2026",
       "period": "Current 5/69 + 1/26 format: Oct. 7, 2015–Aug. 19, 2026",
       "main": [
         21,
-        23,
         28,
+        32,
         61,
         64
       ],
@@ -17,14 +17,14 @@
         21
       ],
       "mainCounts": {
-        "21": 127,
+        "21": 128,
         "61": 126,
         "64": 125,
         "28": 121,
-        "23": 119
+        "32": 120
       },
       "specialCounts": {
-        "21": 127
+        "21": 128
       },
       "sources": [
         {
@@ -35,7 +35,7 @@
     },
     "usa:Mega Millions": {
       "status": "ok",
-      "updated": "October 19, 2026",
+      "updated": "October 26, 2026",
       "period": "Current 5/70 + 1/24 format: Apr. 8, 2025–Aug. 21, 2026",
       "main": [
         17,
@@ -50,9 +50,9 @@
       "mainCounts": {
         "40": 19,
         "42": 18,
+        "49": 18,
         "17": 17,
-        "18": 17,
-        "49": 17
+        "18": 17
       },
       "specialCounts": {
         "17": 17

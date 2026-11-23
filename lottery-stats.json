@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-16T20:31:02.745789+00:00",
+  "generatedAt": "2026-11-23T22:04:32.737768+00:00",
   "games": {
     "usa:Powerball": {
       "status": "ok",
-      "updated": "November 16, 2026",
+      "updated": "November 23, 2026",
       "period": "Current 5/69 + 1/26 format: Oct. 7, 2015–Aug. 19, 2026",
       "main": [
         21,
@@ -35,7 +35,7 @@
     },
     "usa:Mega Millions": {
       "status": "ok",
-      "updated": "November 16, 2026",
+      "updated": "November 23, 2026",
       "period": "Current 5/70 + 1/24 format: Apr. 8, 2025–Aug. 21, 2026",
       "main": [
         10,
@@ -49,13 +49,13 @@
       ],
       "mainCounts": {
         "49": 20,
+        "10": 19,
         "40": 19,
-        "10": 18,
         "18": 18,
         "42": 18
       },
       "specialCounts": {
-        "10": 18
+        "10": 19
       },
       "sources": [
         {
@@ -66,7 +66,7 @@
     },
     "korea:Lotto 6/45": {
       "status": "ok",
-      "updated": "2026년 11월 16일",
+      "updated": "2026년 11월 23일",
       "period": "Official cumulative statistics: draws 1–1,238; bonus numbers excluded",
       "localizedPeriod": {
         "ko": "동행복권 공식 누적 통계 · 제1회–제1,238회 · 보너스 번호 제외"
@@ -83,9 +83,9 @@
         "34": 188,
         "13": 184,
         "27": 184,
-        "18": 182,
+        "18": 183,
         "12": 180,
-        "45": 176
+        "45": 177
       },
       "sources": [
         {
@@ -154,23 +154,23 @@
     },
     "uk:Lotto": {
       "status": "ok",
-      "updated": "November 16, 2026",
+      "updated": "November 23, 2026",
       "period": "Past 12 months under the current 6/59 format",
       "main": [
         10,
-        11,
-        27,
+        12,
         33,
         34,
+        36,
         40
       ],
       "mainCounts": {
-        "34": 54,
-        "10": 36,
-        "40": 32,
-        "33": 30,
-        "27": 28,
-        "11": 22
+        "34": 58,
+        "10": 40,
+        "40": 36,
+        "33": 34,
+        "12": 24,
+        "36": 22
       },
       "sources": [
         {
